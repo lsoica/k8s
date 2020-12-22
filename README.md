@@ -112,4 +112,20 @@ nats-k3s-central-2.novalocal   Ready    <none>   56s     v1.19.5+k3s2
 nats-k3s-central-1.novalocal   Ready    master   6m16s   v1.19.5+k3s2
 nats-k3s-central-3.novalocal   Ready    <none>   3s      v1.19.5+k3s2
 ```
+### install helm
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+```
 
+### Add nats repo
+```
+helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+helm repo update
+```
+
+### Install nats with auth
+```
+helm install east-nats nats/nats -f nats.yaml 
+```
