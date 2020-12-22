@@ -87,3 +87,29 @@ curl -sSL https://nats-io.github.io/k8s/destroy.sh | sh
 
 Unless otherwise noted, the NATS source files are distributed
 under the Apache Version 2.0 license found in the LICENSE file.
+
+## Super cluster setup
+3 clusters, east, central, west
+K3S for each:
+### first node
+```
+curl -sfL https://get.k3s.io | sh -
+
+```
+Get the token:
+```
+sudo cat /var/lib/rancher/k3s/server/node-token
+```
+### second and third nodes
+```
+curl -sfL https://get.k3s.io | K3S_URL=https://10.40.128.120:6443 K3S_TOKEN=K10d5f393ec05e4a6a6b9b70cf9b9bd8e9479d4b7614f505c01bc7b41dcbc67b43d::server:2378b84e0e33d9efed050d8110db6d48 sh -
+```
+### the h8s cluster should be ready
+```
+$ kubectl get nodes -A
+NAME                                     STATUS   ROLES    AGE     VERSION
+nats-k3s-central-2.novalocal   Ready    <none>   56s     v1.19.5+k3s2
+nats-k3s-central-1.novalocal   Ready    master   6m16s   v1.19.5+k3s2
+nats-k3s-central-3.novalocal   Ready    <none>   3s      v1.19.5+k3s2
+```
+

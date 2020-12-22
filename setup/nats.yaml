@@ -1,0 +1,46 @@
+# super-cluster.yaml
+nats:
+  externalAccess: true
+  logging:
+    debug: false
+    trace: true
+  jetstream:
+    enabled: false
+    fileStorage:
+      enabled: true
+      storageClassName: local-path
+
+cluster:
+  enabled: true
+
+gateway:
+  enabled: true
+
+  # NOTE: defined via --set gateway.name="$ctx"
+  name: east
+
+  gateways:
+  - name: central
+    urls:
+    - nats://10.40.128.171:7522
+    - nats://10.40.128.250:7522
+    - nats://10.40.128.85:7522
+
+
+  - name: west
+    urls:
+    - nats://10.40.128.120:7522
+    - nats://10.40.129.42:7522
+    - nats://10.40.128.145:7522
+
+natsbox:
+  enabled: true
+
+auth:
+  enabled: true
+  resolver:
+    type: memory
+    configMap:
+      name: nats-accounts
+      key: resolver.conf
+
