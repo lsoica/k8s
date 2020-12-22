@@ -125,7 +125,30 @@ helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 helm repo update
 ```
 
+### Add seurity
+```
+export NSC_DIR=/home/centos/k8s/setup/nsc/
+kubectl create secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds
+kubectl create secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds"
+kubectl create secret generic nats-test-creds  --from-file "$NSC_DIR/nkeys/creds/KO/A/test.creds"
+kubectl create secret generic nats-test2-creds --from-file "$NSC_DIR/nkeys/creds/KO/B/test.creds"
+kubectl create secret generic stan-creds       --from-file "$NSC_DIR/nkeys/creds/KO/STAN/stan.creds"
+kubectl create configmap nats-accounts         --from-file "$NSC_DIR/config/resolver.conf"
+
+```
+
+### Edit setup/nats.yaml
+
+### Add external IP label on nodes
+```
+kubectl edit node nats-k3s-central-3.novalocal
+
+    nats.io/node-external-ip: 10.40.128.85
+
+
+```
+
 ### Install nats with auth
 ```
-helm install east-nats nats/nats -f nats.yaml 
+helm install central-nats nats/nats -f nats.yaml 
 ```
