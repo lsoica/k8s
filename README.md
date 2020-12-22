@@ -128,7 +128,7 @@ helm repo update
 ### Add seurity
 ```
 export NSC_DIR=/home/centos/k8s/setup/nsc/
-kubectl create secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds
+kubectl create secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds"
 kubectl create secret generic nats-sys-creds   --from-file "$NSC_DIR/nkeys/creds/KO/SYS/sys.creds"
 kubectl create secret generic nats-test-creds  --from-file "$NSC_DIR/nkeys/creds/KO/A/test.creds"
 kubectl create secret generic nats-test2-creds --from-file "$NSC_DIR/nkeys/creds/KO/B/test.creds"
@@ -150,5 +150,13 @@ kubectl edit node nats-k3s-central-3.novalocal
 
 ### Install nats with auth
 ```
-helm install central-nats nats/nats -f nats.yaml 
+helm install central-nats nats/nats -f k8s/setup/nats.yaml 
+```
+
+### Surveyor on the first cluster only
+```
+kubectl apply --validate=false --filename k8s/tools/prometheus-operator.yml 
+kubectl apply --validate=false --filename k8s/tools/nats-prometheus.yml 
+kubectl apply --validate=false --filename k8s/tools/nats-surveyor-grafana.yml 
+kubectl apply --validate=false --filename k8s/tools/nats-surveyor.yml 
 ```
