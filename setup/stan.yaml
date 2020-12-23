@@ -1,0 +1,13 @@
+# super-cluster.yaml
+stan:
+  replicas: 3
+  nats:
+    url: nats://10.40.128.226:4222
+  credentials:
+    secret:
+      name: nats-sys-creds
+      key: sys.creds
+store:
+  cluster:
+    enabled: true
+

@@ -160,3 +160,8 @@ kubectl apply --validate=false --filename k8s/tools/nats-prometheus.yml
 kubectl apply --validate=false --filename k8s/tools/nats-surveyor-grafana.yml 
 kubectl apply --validate=false --filename k8s/tools/nats-surveyor.yml 
 ```
+
+### Stan on each cluster
+```
+helm upgrade --install east-stan nats/stan -f k8s/setup/stan.yaml 
+```
